@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+<div class="container mx-auto px-4 pt-16 pb-20">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-pink-600 mb-4"><%= entry.title %></h1>
+        <div class="flex justify-between items-center mb-4">
+            <p class="text-sm text-gray-500">
+                เขียนโดย: <span class="font-medium text-pink-800"><%= entry.author_name %></span>
+            </p>
+            <p class="text-sm text-gray-500">
+                วันที่: <%= new Date(entry.created_at).toLocaleDateString('th-TH') %>
+            </p>
+        </div>
+        <% if (entry.image_url) { %>
+            <img src="<%= entry.image_url %>" alt="Diary Image" class="w-full h-64 object-cover rounded-lg mb-4">
+        <% } %>
+        <p class="text-gray-700 text-lg mb-4"><%= entry.content %></p>
+        <div class="flex space-x-2 items-center">
+            <% if (entry.mood) { %>
+                <span class="text-sm bg-pink-100 text-pink-800 px-2 py-1 rounded">
+                    <%= entry.mood %>
+                </span>
+            <% } %>
+            <% if (entry.location) { %>
+                <span class="text-sm text-gray-500">
+                    <i class="fas fa-map-marker-alt"></i> <%= entry.location %>
+                </span>
+            <% } %>
+        </div>
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="/diary/edit/<%= entry.id %>" 
+               class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700">
+                แก้ไข
+            </a>
+            <form action="/diary/delete/<%= entry.id %>" method="POST" onsubmit="return confirm('ยืนยันการลบบันทึกนี้หรือไม่?');">
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    ลบ
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>
